@@ -63,7 +63,7 @@ export { chainsPendulumSVG } from './generated/pendulumSVG.js';
 export { chainsPeopleKusamaSVG } from './generated/people-kusamaSVG.js';
 export { chainsPeoplePolkadotSVG } from './generated/people-polkadotSVG.js';
 export { chainsPicassoSVG } from './generated/picassoSVG.js';
-export { chainsPolkadotCircleSVG } from './generated/polkadot-circleSVG.js';
+export { chainsPolkadotCirclePNG } from './generated/polkadot-circlePNG.js';
 export { chainsPopNetworkSVG } from './generated/pop-networkSVG.js';
 export { chainsQpnPNG } from './generated/qpnPNG.js';
 export { chainsQuantumFusionPNG } from './generated/quantum-fusionPNG.js';
