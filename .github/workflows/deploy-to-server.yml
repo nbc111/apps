@@ -11,38 +11,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'yarn'
-        
-    - name: Install dependencies
-      run: yarn install --immutable
-      
-    - name: Build application
-      run: |
-        yarn polkadot-dev-clean-build
-        npx webpack --config packages/apps/webpack.config.cjs
-        
-    - name: Create deployment package
-      run: |
-        tar -czf build.tar.gz packages/apps/build/
-        
-    - name: Deploy to server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USERNAME }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        port: ${{ secrets.SERVER_PORT }}
-        source: "build.tar.gz"
-        target: "/root/apps/"
-        
-    - name: Extract and restart on server
+    - name: Deploy and build on server
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -51,24 +20,15 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         script: |
           cd /root/apps
-          # 备份当前构建文件
-          if [ -d "packages/apps/build" ]; then
-            mv packages/apps/build packages/apps/build.backup
-          fi
-          # 解压新的构建文件
-          tar -xzf build.tar.gz
-          rm build.tar.gz
-          # 确保构建文件存在
-          if [ -d "packages/apps/build" ]; then
-            echo "Build files extracted successfully"
-            # 重启应用
-            pm2 restart nbc-apps || pm2 start ecosystem.config.cjs --name nbc-apps
-            echo "Deployment completed successfully!"
-          else
-            echo "Error: Build files not found after extraction"
-            # 恢复备份
-            if [ -d "packages/apps/build.backup" ]; then
-              mv packages/apps/build.backup packages/apps/build
-            fi
-            exit 1
-          fi 
+          echo "Pulling latest code..."
+          git pull origin main
+          echo "Installing dependencies..."
+          yarn install --immutable
+          echo "Building application..."
+          yarn polkadot-dev-clean-build
+          npx webpack --config packages/apps/webpack.config.cjs
+          echo "Restarting application..."
+          pm2 restart nbc-apps || pm2 start ecosystem.config.cjs --name nbc-apps
+          echo "Deployment completed successfully!"
+          echo "Checking build files..."
+          ls -la packages/apps/build/ 
