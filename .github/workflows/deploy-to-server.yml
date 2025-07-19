@@ -1,0 +1,57 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'yarn'
+        
+    - name: Install dependencies
+      run: yarn install --immutable
+      
+    - name: Build application
+      run: |
+        yarn polkadot-dev-clean-build
+        npx webpack --config packages/apps/webpack.config.cjs
+        
+    - name: Create deployment package
+      run: |
+        tar -czf build.tar.gz packages/apps/build/
+        
+    - name: Deploy to server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT }}
+        source: "build.tar.gz"
+        target: "/root/apps/"
+        
+    - name: Extract and restart on server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          cd /root/apps
+          tar -xzf build.tar.gz
+          rm build.tar.gz
+          pm2 restart nbc-apps || pm2 start ecosystem.config.cjs --name nbc-apps
+          echo "Deployment completed successfully!" 
