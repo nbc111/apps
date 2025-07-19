@@ -51,7 +51,24 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         script: |
           cd /root/apps
+          # 备份当前构建文件
+          if [ -d "packages/apps/build" ]; then
+            mv packages/apps/build packages/apps/build.backup
+          fi
+          # 解压新的构建文件
           tar -xzf build.tar.gz
           rm build.tar.gz
-          pm2 restart nbc-apps || pm2 start ecosystem.config.cjs --name nbc-apps
-          echo "Deployment completed successfully!" 
+          # 确保构建文件存在
+          if [ -d "packages/apps/build" ]; then
+            echo "Build files extracted successfully"
+            # 重启应用
+            pm2 restart nbc-apps || pm2 start ecosystem.config.cjs --name nbc-apps
+            echo "Deployment completed successfully!"
+          else
+            echo "Error: Build files not found after extraction"
+            # 恢复备份
+            if [ -d "packages/apps/build.backup" ]; then
+              mv packages/apps/build.backup packages/apps/build
+            fi
+            exit 1
+          fi 
