@@ -27,8 +27,11 @@ jobs:
           echo "Building application..."
           yarn polkadot-dev-clean-build
           npx webpack --config packages/apps/webpack.config.cjs
-          echo "Restarting application..."
-          pm2 restart nbc-apps || pm2 start ecosystem.config.cjs --name nbc-apps
+          echo "Restarting application on port 2311..."
+          pm2 restart nbc-apps || pm2 start "npx serve packages/apps/build -l 2311 -s" --name nbc-apps
+          echo "Updating Nginx configuration..."
+          sed -i 's/localhost:3000/localhost:2311/g' /etc/nginx/sites-available/nbc-apps
+          systemctl reload nginx
           echo "Deployment completed successfully!"
           echo "Checking build files..."
           ls -la packages/apps/build/ 
