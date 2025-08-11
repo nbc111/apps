@@ -17,7 +17,7 @@ module.exports = merge(
       },
       hot: true,
       open: false,
-      port: 3000,
+      port: 1311,
       static: path.resolve(__dirname, 'build')
     },
     plugins: [
