@@ -18,7 +18,16 @@ module.exports = merge(
       hot: true,
       open: false,
       port: 1311,
-      static: path.resolve(__dirname, 'build')
+      static: path.resolve(__dirname, 'build'),
+      // 添加开发服务器配置
+      host: '0.0.0.0',
+      allowedHosts: 'all',
+      client: {
+        overlay: {
+          errors: true,
+          warnings: false
+        }
+      }
     },
     plugins: [
       new HtmlWebpackPlugin({
