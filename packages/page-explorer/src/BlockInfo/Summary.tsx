@@ -67,6 +67,7 @@ function Summary ({ events, maxBlockWeight, maxProofSize, signedBlock }: Props):
               <FormatBalance
                 className={deposits ? '' : '--tmp'}
                 value={deposits || BN_ONE}
+                format={[10, 'NBC']}
               />
             </CardSummary>
             <CardSummary
@@ -76,6 +77,7 @@ function Summary ({ events, maxBlockWeight, maxProofSize, signedBlock }: Props):
               <FormatBalance
                 className={transfers ? '' : '--tmp'}
                 value={transfers || BN_ONE}
+                format={[10, 'NBC']}
               />
             </CardSummary>
           </>

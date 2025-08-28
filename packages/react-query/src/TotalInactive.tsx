@@ -24,6 +24,7 @@ function TotalInactive ({ children, className = '', label }: Props): React.React
         className={inactiveIssuance ? '' : '--tmp'}
         value={inactiveIssuance || 1}
         withSi
+        format={[10, ' NBC']}
       />
       {children}
     </div>
