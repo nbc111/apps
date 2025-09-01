@@ -139,7 +139,7 @@ async function loadOnReady (api: ApiPromise, endpoint: LinkOption | null, fork: 
   const ss58Format = settings.prefix === -1
     ? chainSS58
     : settings.prefix;
-  const tokenSymbol = properties.tokenSymbol.unwrapOr([formatBalance.getDefaults().unit, ...DEFAULT_AUX]);
+  const tokenSymbol = ['NBC']; // 强制使用NBC作为币种符号
   const tokenDecimals = properties.tokenDecimals.unwrapOr([DEFAULT_DECIMALS]);
   const isEthereum = properties.isEthereum.isTrue || ethereumChains.includes(api.runtimeVersion.specName.toString()) || urlIsEthereum;
   const isDevelopment = (systemChainType.isDevelopment || systemChainType.isLocal || isTestChain(systemChain));
@@ -159,9 +159,9 @@ async function loadOnReady (api: ApiPromise, endpoint: LinkOption | null, fork: 
   // first setup the UI helpers
   formatBalance.setDefaults({
     decimals: tokenDecimals.map((b) => b.toNumber()),
-    unit: tokenSymbol[0].toString()
+    unit: 'NBC' // 强制使用NBC
   });
-  TokenUnit.setAbbr(tokenSymbol[0].toString());
+  TokenUnit.setAbbr('NBC'); // 强制使用NBC
 
   // finally load the keyring
   isKeyringLoaded() || keyring.loadAll({

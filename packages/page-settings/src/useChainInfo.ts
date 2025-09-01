@@ -31,7 +31,8 @@ function useChainInfoImpl (): ChainInfo | null {
           ? api.registry.chainSS58
           : DEFAULT_SS58.toNumber(),
         tokenDecimals: (api.registry.chainDecimals || [DEFAULT_DECIMALS.toNumber()])[0],
-        tokenSymbol: (api.registry.chainTokens || formatBalance.getDefaults().unit)[0],
+        // tokenSymbol: (api.registry.chainTokens || formatBalance.getDefaults().unit)[0],
+        tokenSymbol: 'NBC', // 或者 (api.registry.chainTokens || ['NBC'])[0],
         types: getSpecTypes(api.registry, systemChain, api.runtimeVersion.specName, api.runtimeVersion.specVersion) as unknown as Record<string, string>
       }
       : null,
