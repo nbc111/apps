@@ -44,7 +44,7 @@ function getFormat (registry: Registry, formatIndex = 0): [number, string] {
       : decimals[0],
     formatIndex < tokens.length
       ? tokens[formatIndex]
-      : tokens[1],
+      : tokens[1]
   ];
 }
 
