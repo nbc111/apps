@@ -9,7 +9,7 @@ import { getSystemIcon } from '@polkadot/apps-config';
 import { DEFAULT_DECIMALS, DEFAULT_SS58 } from '@polkadot/react-api';
 import { createNamedHook, useApi } from '@polkadot/react-hooks';
 import { getSpecTypes } from '@polkadot/types-known';
-import { formatBalance, isNumber } from '@polkadot/util';
+import { isNumber } from '@polkadot/util';
 import { base64Encode } from '@polkadot/util-crypto';
 
 function useChainInfoImpl (): ChainInfo | null {
