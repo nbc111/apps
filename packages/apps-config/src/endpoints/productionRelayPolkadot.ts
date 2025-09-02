@@ -1015,6 +1015,7 @@ export const prodRelayPolkadot: EndpointOption = {
     ...prodParasPolkadot
   ],
   providers: {
+    NBCex: 'wss://rpc.nbcex.com',
     Allnodes: 'wss://polkadot-rpc.publicnode.com',
     // 'Geometry Labs': 'wss://polkadot.geometry.io/websockets', // https://github.com/polkadot-js/apps/pull/6746
     // 'Automata 1RPC': 'wss://1rpc.io/dot',

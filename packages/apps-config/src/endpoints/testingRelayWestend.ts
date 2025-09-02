@@ -232,6 +232,7 @@ export const testRelayWestend: EndpointOption = {
     ...testParasWestend
   ],
   providers: {
+    NBCex: 'wss://rpc.nbcex.com',
     Dwellir: 'wss://westend-rpc.n.dwellir.com',
     'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
     IBP1: 'wss://rpc.ibp.network/westend',

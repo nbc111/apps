@@ -511,6 +511,7 @@ export const testRelayPaseo: EndpointOption = {
     ...testParasPaseo
   ],
   providers: {
+    NBCex: 'wss://rpc.nbcex.com',
     Amforc: 'wss://paseo.rpc.amforc.com',
     Dwellir: 'wss://paseo-rpc.n.dwellir.com',
     IBP1: 'wss://rpc.ibp.network/paseo',

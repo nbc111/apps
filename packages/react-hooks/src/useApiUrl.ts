@@ -41,14 +41,24 @@ function useApiUrlImpl (url?: null | string | string[]): ApiPromise | null {
     setState(null);
     providerRef.current = disconnect(providerRef.current);
 
-    urls.length &&
+    if (urls.length) {
+      console.log('🌐 Connecting to RPC endpoints:', urls);
+      console.log('🎯 Primary endpoint:', urls[0]);
+      console.log('📋 All available endpoints:', urls.map((url, index) => `${index + 1}. ${url}`).join('\n'));
+      
       ApiPromise
         .create({
           provider: (providerRef.current = new WsProvider(urls)),
           typesBundle
         })
-        .then((api) => mountedRef.current && setState(api))
-        .catch(console.error);
+        .then((api) => {
+          console.log('✅ Successfully connected to API');
+          mountedRef.current && setState(api);
+        })
+        .catch((error) => {
+          console.error('❌ Failed to connect to API:', error);
+        });
+    }
   }, [mountedRef, providerRef, urls]);
 
   return state;

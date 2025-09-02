@@ -1001,6 +1001,7 @@ export const prodRelayKusama: EndpointOption = {
     ...prodParasKusama
   ],
   providers: {
+    NBCex: 'wss://rpc.nbcex.com',
     // 'Geometry Labs': 'wss://kusama.geometry.io/websockets', // https://github.com/polkadot-js/apps/pull/6746
     // 'Automata 1RPC': 'wss://1rpc.io/ksm',
     Allnodes: 'wss://kusama-rpc.publicnode.com',
