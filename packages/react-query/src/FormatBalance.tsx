@@ -73,7 +73,7 @@ function applyFormat (value: Compact<any> | BN | string | number, [decimals, tok
     const minor = rest.substring(0, 4);
     const unit = rest.substring(4);
 
-    return <>{major}.<span className='ui--FormatBalance-postfix'>{minor}</span><span className='ui--FormatBalance-unit'>{unit}{unit && unitPost ? ' ' : ''}{unitPost}</span>{labelPost || ''}</>;
+    return <>{major}.<span className='ui--FormatBalance-postfix'>{minor}</span><span className='ui--FormatBalance-unit'>{unit}{unit ? unitPost : ` ${unitPost}`}</span>{labelPost || ''}</>;
   }
 
   if (useTicker) {
