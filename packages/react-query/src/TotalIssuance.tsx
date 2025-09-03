@@ -17,12 +17,16 @@ function TotalIssuance ({ children, className = '', label }: Props): React.React
   const { api } = useApi();
   const totalIssuance = useCall<string>(api.query.balances?.totalIssuance);
 
+  // 固定显示 210,000,000,000 NBC (210 BNBC)
+  const fixedValue = '210000000000000000000000000000'; // 210,000,000,000 * 10^18
+
   return (
     <div className={className}>
       {label || ''}
       <FormatBalance
         className={totalIssuance ? '' : '--tmp'}
-        value={totalIssuance || 1}
+        // value={totalIssuance || 1}
+        value={fixedValue}
         withSi
       />
       {children}

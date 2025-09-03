@@ -47,7 +47,8 @@ function Summary ({ className, issuanceActive, issuanceInactive, issuanceTotal, 
           <CardSummary label={t('total issuance')}>
             <FormatBalance
               className={issuanceTotal ? '' : '--tmp'}
-              value={issuanceTotal || 1}
+              // value={issuanceTotal || 1}
+              value="210000000000000000000000000000"
               withSi
             />
           </CardSummary>
