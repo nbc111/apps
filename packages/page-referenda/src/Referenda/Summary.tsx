@@ -45,12 +45,11 @@ function Summary ({ className, issuanceActive, issuanceInactive, issuanceTotal, 
       {withIssuance && (
         <section>
           <CardSummary label={t('total issuance')}>
-            <FormatBalance
-              className={issuanceTotal ? '' : '--tmp'}
-              // value={issuanceTotal || 1}
-              value="210000000000000000000000000000"
-              withSi
-            />
+            <span className="ui--FormatBalance">
+              <span className="ui--FormatBalance-value --digits">
+                210,000,000,000 NBC
+              </span>
+            </span>
           </CardSummary>
           {isFunction(api.query.balances.inactiveIssuance) && (
             <>

@@ -3,10 +3,6 @@
 
 import React from 'react';
 
-import { useApi, useCall } from '@polkadot/react-hooks';
-
-import FormatBalance from './FormatBalance.js';
-
 interface Props {
   children?: React.ReactNode;
   className?: string;
@@ -14,21 +10,17 @@ interface Props {
 }
 
 function TotalIssuance ({ children, className = '', label }: Props): React.ReactElement<Props> | null {
-  const { api } = useApi();
-  const totalIssuance = useCall<string>(api.query.balances?.totalIssuance);
-
-  // 固定显示 210,000,000,000 NBC (210 BNBC)
-  const fixedValue = '210000000000000000000000000000'; // 210,000,000,000 * 10^18
+  // 硬编码显示 210,000,000,000 NBC
+  const fixedDisplayValue = '210,000,000,000 NBC';
 
   return (
     <div className={className}>
       {label || ''}
-      <FormatBalance
-        className={totalIssuance ? '' : '--tmp'}
-        // value={totalIssuance || 1}
-        value={fixedValue}
-        withSi
-      />
+      <span className="ui--FormatBalance">
+        <span className="ui--FormatBalance-value --digits">
+          {fixedDisplayValue}
+        </span>
+      </span>
       {children}
     </div>
   );
