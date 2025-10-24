@@ -9,7 +9,7 @@ import React from 'react';
 import { CardSummary, SummaryBox } from '@polkadot/react-components';
 import { useApi } from '@polkadot/react-hooks';
 import { FormatBalance } from '@polkadot/react-query';
-import { formatNumber, isFunction } from '@polkadot/util';
+import { formatNumber, isFunction, BN_ZERO } from '@polkadot/util';
 
 import { useTranslation } from '../translate.js';
 
@@ -22,7 +22,7 @@ interface Props {
   withIssuance?: boolean;
 }
 
-function Summary ({ className, issuanceActive, issuanceInactive, issuanceTotal, summary: { refActive, refCount }, withIssuance }: Props): React.ReactElement<Props> {
+function Summary ({ className, issuanceActive, issuanceInactive, summary: { refActive, refCount }, withIssuance }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const { api } = useApi();
 
@@ -59,8 +59,9 @@ function Summary ({ className, issuanceActive, issuanceInactive, issuanceTotal, 
               >
                 <FormatBalance
                   className={issuanceInactive ? '' : '--tmp'}
-                  value={issuanceInactive || 1}
-                  withSi
+                  value={issuanceInactive || BN_ZERO}
+                  withSi={false}
+                  format={[12, 'NBC']}
                 />
               </CardSummary>
               <CardSummary
@@ -69,8 +70,9 @@ function Summary ({ className, issuanceActive, issuanceInactive, issuanceTotal, 
               >
                 <FormatBalance
                   className={issuanceActive ? '' : '--tmp'}
-                  value={issuanceActive || 1}
-                  withSi
+                  value={issuanceActive || BN_ZERO}
+                  withSi={false}
+                  format={[12, 'NBC']}
                 />
               </CardSummary>
             </>

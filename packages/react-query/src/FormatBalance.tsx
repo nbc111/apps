@@ -29,8 +29,8 @@ interface Props {
 }
 
 // for million, 2 * 3-grouping + comma
-const M_LENGTH = 6 + 1;
-const K_LENGTH = 3 + 1;
+const M_LENGTH = 15;
+const K_LENGTH = 10;
 
 type LabelPost = string | React.ReactNode
 
@@ -69,7 +69,7 @@ function applyFormat (value: Compact<any> | BN | string | number, [decimals, tok
   const unitPost = withCurrency ? token : '';
 
   if (prefix.length > M_LENGTH) {
-    const [major, rest] = formatBalance(value, { decimals, withUnit: false }).split('.');
+    const [major, rest] = formatBalance(value, { decimals, withUnit: false, withSi: false }).split('.');
     const minor = rest.substring(0, 4);
     const unit = rest.substring(4);
 

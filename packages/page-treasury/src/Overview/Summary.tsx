@@ -67,7 +67,8 @@ function Summary ({ approvalCount, proposalCount }: Props): React.ReactElement<P
           >
             <FormatBalance
               value={pendingProposals}
-              withSi
+              withSi={false}
+              format={[12, 'NBC']}
             />
           </CardSummary>
         )}
@@ -78,7 +79,8 @@ function Summary ({ approvalCount, proposalCount }: Props): React.ReactElement<P
           >
             <FormatBalance
               value={pendingBounties}
-              withSi
+              withSi={false}
+              format={[12, 'NBC']}
             />
           </CardSummary>
         )}
@@ -89,7 +91,8 @@ function Summary ({ approvalCount, proposalCount }: Props): React.ReactElement<P
           <FormatBalance
             className={burn ? '' : '--tmp'}
             value={burn || 1}
-            withSi
+            withSi={false}
+            format={[12, 'NBC']}
           />
         </CardSummary>
       </section>
@@ -106,12 +109,14 @@ function Summary ({ approvalCount, proposalCount }: Props): React.ReactElement<P
           <span className={hasSpendable ? '' : '--tmp'}>
             <FormatBalance
               value={spendable || BN_TWO}
-              withSi
+              withSi={false}
+              format={[12, 'NBC']}
             />
             <>&nbsp;/&nbsp;</>
             <FormatBalance
               value={value || BN_THREE}
-              withSi
+              withSi={false}
+              format={[12, 'NBC']}
             />
           </span>
         </CardSummary>
